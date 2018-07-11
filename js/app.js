@@ -1,8 +1,9 @@
-/*
- * Create a list that holds all of your cards
- */
+
+// variable declaration
 var theDeck = document.getElementsByClassName("deck")[0];
-console.log(theDeck)
+var opennedCards = [];
+
+// icons array
 const classesArray = [
     "fa fa-diamond",
     "fa fa-paper-plane",
@@ -14,6 +15,7 @@ const classesArray = [
     "fa fa-bomb"
 ];
 
+//Draw a card with an i tag to hold the icon later
 function createCard() {
     var li = document.createElement('li');
     li.classList.add('card');
@@ -24,6 +26,7 @@ function createCard() {
     return li;
 }
 
+//Shuffling and adding icons inside the cards object
 function init() {
     var fakeDoc = document.createDocumentFragment();
         var x = classesArray.concat(classesArray);
@@ -44,18 +47,31 @@ function init() {
 }
 init();
 
-function flipCard(e) {
+// display the card's symbol
+function revealIcon(e){
     var classNames = e.target.classList;
     classNames.add('open');
     classNames.add('show');
     return classNames;
 }
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+
+// Add card to oppened cards lits
+function addToOpennedList(item){
+   /*  - if the list already has another card, check to see if the two cards match
+    *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
+    *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
+    *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
+    *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
+    */
+    opennedCards.push(item);
+}
+
+// clicking a card
+function flipCard(evt) {
+    var element = evt.target;
+    element.classList = revealIcon(evt);
+    addToOpennedList(element);
+}
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -71,18 +87,3 @@ function shuffle(array) {
     
     return array;
 }
-
-    
-
-
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
