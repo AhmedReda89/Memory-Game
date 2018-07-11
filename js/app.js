@@ -5,7 +5,7 @@ var theDeck = document.getElementsByClassName("deck")[0];
 console.log(theDeck)
 const classesArray = [
     "fa fa-diamond",
-    "fa fa-paper-plane-0",
+    "fa fa-paper-plane",
     "fa fa-anchor",
     "fa fa-bolt",
     "fa fa-cube",
@@ -35,7 +35,12 @@ function init() {
             fakeDoc.appendChild(newCard);
         }
         theDeck.appendChild(fakeDoc);
-        theDeck.children.addEventListener("click", flipCard);
+        var listItems = document.querySelectorAll('.deck .card');
+        //debugger;
+        listItems.forEach(function(item, index){
+            listItems[index].addEventListener("click", flipCard);
+        });
+        
 }
 init();
 
