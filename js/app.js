@@ -1,4 +1,17 @@
 
+// Helper functions
+Array.prototype.remove = function() {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
+
+
 // variable declaration
 var theDeck = document.getElementsByClassName("deck")[0];
 var opennedCards = [];
@@ -22,7 +35,7 @@ function createCard() {
     var image = document.createElement("i");
     theDeck.appendChild(li);
     li.appendChild(image);
-    image.classList.add("fa");
+    //image.classList.add("fa");
     return li;
 }
 
@@ -31,7 +44,7 @@ function init() {
     var fakeDoc = document.createDocumentFragment();
         var x = classesArray.concat(classesArray);
         var newClassesArray = shuffle(x);
-        console.log(newClassesArray);
+        //console.log(newClassesArray);
         for (var i=0; i < newClassesArray.length; i++) {
             var newCard = createCard();
             newCard.children[0].classList += newClassesArray[i];
@@ -43,7 +56,6 @@ function init() {
         listItems.forEach(function(item, index){
             listItems[index].addEventListener("click", flipCard);
         });
-        
 }
 init();
 
@@ -52,6 +64,13 @@ function revealIcon(e){
     var classNames = e.target.classList;
     classNames.add('open');
     classNames.add('show');
+    return classNames;
+}
+// hide the card's symbol
+function hideIcon(e){
+    var classNames = e.target.classList;
+    classNames.remove("open");
+    classNames.remove('show');
     return classNames;
 }
 
@@ -65,9 +84,20 @@ function addToOpennedList(item){
     */
     opennedCards.push(item);
 }
+// remove card to oppened cards lits
+function removeFromOpennedList(item){ // to be tested
+    console.log('test');
+    console.log(item);
+    opennedCards.remove(item);
+    console.log(item);
+}
+
+function compareRevealedCards(el){
+    
+}
 
 // clicking a card
-function flipCard(evt) {
+function flipCard(evt) { 
     var element = evt.target;
     element.classList = revealIcon(evt);
     addToOpennedList(element);
