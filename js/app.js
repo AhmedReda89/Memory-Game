@@ -14,7 +14,8 @@ Array.prototype.remove = function() {
 
 // variable declaration
 var theDeck = document.getElementsByClassName("deck")[0];
-var opennedCards = [];
+var flippedCard1, flippedCard2;
+var flippedCardsCount = 0;
 
 // icons array
 const classesArray = [
@@ -62,45 +63,66 @@ init();
 // display the card's symbol
 function revealIcon(e){
     var classNames = e.target.classList;
-    classNames.add('open');
-    classNames.add('show');
-    return classNames;
-}
-// hide the card's symbol
-function hideIcon(e){
-    var classNames = e.target.classList;
-    classNames.remove("open");
-    classNames.remove('show');
+    // Here we check if there's no cards flipped or only 1 is flipped
+    if(!classNames.contains('open') && !classNames.contains('match') && flippedCardsCount < 2){ 
+        classNames.add('open');
+        classNames.add('show');
+        if(flippedCard1 == undefined){
+            flippedCard1 = e.target;
+        }else{
+            flippedCard2 = e.target;
+        }
+        flippedCardsCount ++;
+        compareFlippedCards(e.target);   
+    }
+    else if(classNames.contains('open')){
+        classNames.remove('open');
+        classNames.remove('show');
+        flippedCardsCount--;
+    }
     return classNames;
 }
 
-// Add card to oppened cards lits
-function addToOpennedList(item){
-   /*  - if the list already has another card, check to see if the two cards match
-    *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
-    *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
-    *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
-    *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
-    */
-    opennedCards.push(item);
-}
-// remove card to oppened cards lits
-function removeFromOpennedList(item){ // to be tested
-    console.log('test');
-    console.log(item);
-    opennedCards.remove(item);
-    console.log(item);
-}
 
-function compareRevealedCards(el){
-    
+function compareFlippedCards(el){
+    //if the cards match highlight them and remove open and show classes for easier manipulation
+    if(flippedCardsCount == 2){
+        var cards = document.getElementsByClassName("card");
+        if(flippedCard1 == flippedCard2){
+            cards.forEach(element => {
+                if(flippedCard1 == element){
+                    element.classList.add('match');
+                    element.classList.remove('open');
+                    element.classList.remove('show');
+                    flippedCard1 = undefined;
+                    flippedCard2 = undefined;
+                    flippedCardsCount --;
+                }else if(flippedCard2 == element){
+                    element.classList.add('match');
+                    element.classList.remove('open');
+                    element.classList.remove('show');
+                    flippedCard1 = undefined;
+                    flippedCard2 = undefined;
+                    flippedCardsCount --;
+                }
+            });
+        }else{
+            cards.forEach(element => {
+                elemet.classList.remove('open');
+                elemet.classList.remove('show');
+            });
+            flippedCard1 = undefined;
+            flippedCard2 = undefined;
+            flippedCardsCount = 0;
+        }
+
+    }
 }
 
 // clicking a card
 function flipCard(evt) { 
     var element = evt.target;
     element.classList = revealIcon(evt);
-    addToOpennedList(element);
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
