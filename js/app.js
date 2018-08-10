@@ -83,6 +83,19 @@ function revealIcon(e){
     return classNames;
 }
 
+function checkIfUserWon (){
+    let cards = document.getElementsByClassName("card");
+    let allMatched = false;
+    for (let index = 0; index < cards.length; index++) {
+        if(cards[index].classList.contains("match")){
+            allMatched = true;
+        }else{
+            allMatched = false;
+            return false;
+        }
+    }
+    return true;
+}
 
 function compareFlippedCards(el){
     //if the cards match highlight them and remove open and show classes for easier manipulation
@@ -120,7 +133,9 @@ function compareFlippedCards(el){
             flippedCard2 = undefined;
             flippedCardsCount = 0;
         }
-
+        if(checkIfUserWon()){
+            alert('Congratulations you won!!!');
+        }
     }
 }
 
