@@ -74,6 +74,9 @@ function revealIcon(e){
         }
         flippedCardsCount ++;
         compareFlippedCards(e.target);   
+        if(checkIfUserWon()){
+            alert('Congratulations you won!!!');
+        }
     }
     else if(classNames.contains('open')){
         classNames.remove('open');
@@ -83,6 +86,7 @@ function revealIcon(e){
     return classNames;
 }
 
+// checks if there're still unmatched cards
 function checkIfUserWon (){
     let cards = document.getElementsByClassName("card");
     let allMatched = false;
@@ -132,9 +136,6 @@ function compareFlippedCards(el){
             flippedCard1 = undefined;
             flippedCard2 = undefined;
             flippedCardsCount = 0;
-        }
-        if(checkIfUserWon()){
-            alert('Congratulations you won!!!');
         }
     }
 }
