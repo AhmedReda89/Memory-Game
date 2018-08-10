@@ -88,29 +88,34 @@ function compareFlippedCards(el){
     //if the cards match highlight them and remove open and show classes for easier manipulation
     if(flippedCardsCount == 2){
         var cards = document.getElementsByClassName("card");
-        if(flippedCard1 == flippedCard2){
-            cards.forEach(element => {
-                if(flippedCard1 == element){
-                    element.classList.add('match');
-                    element.classList.remove('open');
-                    element.classList.remove('show');
+        debugger;
+        var flippedCard1IconClasses = flippedCard1.children[0].classList;
+        var flippedCard2IconClasses = flippedCard2.children[0].classList;
+        if(JSON.stringify(flippedCard1IconClasses) == JSON.stringify(flippedCard2IconClasses)){
+            for (var index = 0; index < cards.length; index++) {
+                var cardOnHandClasses = cards[index].children[0].classList;
+                if(JSON.stringify(flippedCard1IconClasses) == JSON.stringify(cardOnHandClasses)){
+                    cards[index].classList.add('match');
+                    cards[index].classList.remove('open');
+                    cards[index].classList.remove('show');
                     flippedCard1 = undefined;
                     flippedCard2 = undefined;
                     flippedCardsCount --;
-                }else if(flippedCard2 == element){
-                    element.classList.add('match');
-                    element.classList.remove('open');
-                    element.classList.remove('show');
+                }else if(JSON.stringify(flippedCard2IconClasses) == JSON.stringify(cardOnHandClasses)){
+                    cards[index].classList.add('match');
+                    cards[index].classList.remove('open');
+                    cards[index].classList.remove('show');
                     flippedCard1 = undefined;
                     flippedCard2 = undefined;
                     flippedCardsCount --;
                 }
-            });
+            }
         }else{
-            cards.forEach(element => {
-                elemet.classList.remove('open');
-                elemet.classList.remove('show');
-            });
+            console.log(cards);
+            for (let index = 0; index < cards.length; index++) {
+                cards[index].classList.remove('open');
+                cards[index].classList.remove('show');
+            };
             flippedCard1 = undefined;
             flippedCard2 = undefined;
             flippedCardsCount = 0;
