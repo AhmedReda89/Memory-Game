@@ -14,8 +14,11 @@ Array.prototype.remove = function() {
 
 // variable declaration
 var theDeck = document.getElementsByClassName("deck")[0];
+var stars = document.querySelectorAll('.rating-star');
 var flippedCard1, flippedCard2;
 var flippedCardsCount = 0;
+var movesCount = 0;
+var movesRating = 0;
 
 // icons array
 const classesArray = [
@@ -57,6 +60,7 @@ function init() {
         listItems.forEach(function(item, index){
             listItems[index].addEventListener("click", flipCard);
         });
+        document.querySelector('.moves').innerHTML = movesCount;
 }
 init();
 
@@ -76,6 +80,7 @@ function revealIcon(e){
         compareFlippedCards(e.target);   
         if(checkIfUserWon()){
             alert('Congratulations you won!!!');
+            resetGame();
         }
     }
     else if(classNames.contains('open')){
@@ -84,6 +89,39 @@ function revealIcon(e){
         flippedCardsCount--;
     }
     return classNames;
+}
+
+// Resetting moves rating and reinitiating the game
+function resetGame(){
+    movesCount = 0;
+    document.querySelector('.moves').innerHTML = movesCount;
+    let cardsList = document.querySelectorAll('.card');
+    Array.prototype.forEach.call(cardsList, card => {
+        theDeck.removeChild(card);
+    });
+    movesRating = 0;
+    init();
+    Array.prototype.forEach.call(stars, star => {
+        star.classList = "fa fa-star";
+    });
+}
+
+//count moves and rating score
+function scoreRating(){
+    //(movesCount <= 24)? console.log('3 stars'):( (movesCount <= 30)? console.log('2 stars'): (movesCount > 30)? console.log('1 stars'): console.log('What!') ); 
+    if(movesCount <= 24){
+        Array.prototype.forEach.call(stars, star => {
+            star.classList = "fa fa-star";
+        });
+    }else if(movesCount <= 30){
+        stars[0].classList = "fa fa-star";
+        stars[1].classList = "fa fa-star";
+        stars[2].classList = "fa fa-star-o";
+    }else if(movesCount > 30){
+        stars[0].classList = "fa fa-star";
+        stars[1].classList = "fa fa-star-o";
+        stars[2].classList = "fa fa-star-o";
+    }
 }
 
 // checks if there're still unmatched cards
@@ -105,7 +143,7 @@ function compareFlippedCards(el){
     //if the cards match highlight them and remove open and show classes for easier manipulation
     if(flippedCardsCount == 2){
         var cards = document.getElementsByClassName("card");
-        debugger;
+        
         var flippedCard1IconClasses = flippedCard1.children[0].classList;
         var flippedCard2IconClasses = flippedCard2.children[0].classList;
         if(JSON.stringify(flippedCard1IconClasses) == JSON.stringify(flippedCard2IconClasses)){
@@ -144,6 +182,9 @@ function compareFlippedCards(el){
 function flipCard(evt) { 
     var element = evt.target;
     element.classList = revealIcon(evt);
+    movesCount ++;
+    document.querySelector('.moves').innerHTML = movesCount;
+    scoreRating();
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
