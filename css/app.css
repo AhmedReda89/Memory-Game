@@ -112,22 +112,26 @@ h1 {
 }
 
 .score-panel .stars {
-    margin: 0;
     padding: 0;
     display: inline-block;
-    margin: 0 5px 0 0;
+    margin: 0 20px 0 0;
 }
 
 .score-panel .stars li {
     list-style: none;
     display: inline-block;
 }
-
+.score-panel .moves {
+    margin: 0 20px 0 0;
+}
 .score-panel .restart {
     float: right;
     cursor: pointer;
+    background: transparent;border:none;
 }
-.restart{background: transparent;border:none;}
+.score-panel .timer{
+    text-align: center;margin-top: 15px;
+}
 
 
 /* Congratulations Popup */
