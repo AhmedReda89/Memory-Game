@@ -32,6 +32,7 @@ const classesArray = [
     "fa fa-bomb"
 ];
 
+
 //Draw a card with an i tag to hold the icon later
 function createCard() {
     var li = document.createElement('li');
@@ -64,11 +65,17 @@ function init() {
 }
 init();
 
+function timer(){
+    // todo
+}
+
 // display the card's symbol
 function revealIcon(e){
     var classNames = e.target.classList;
+    console.log(e.target);
     // Here we check if there's no cards flipped or only 1 is flipped
-    if(!classNames.contains('open') && !classNames.contains('match') && flippedCardsCount < 2){ 
+
+    if( e.target.tagName == "LI" && !classNames.contains('open') && !classNames.contains('match') && flippedCardsCount < 2){ 
         classNames.add('open');
         classNames.add('show');
         if(flippedCard1 == undefined){
@@ -78,12 +85,16 @@ function revealIcon(e){
         }
         flippedCardsCount ++;
         compareFlippedCards(e.target);   
-        if(checkIfUserWon()){
-            alert('Congratulations you won!!!');
-            resetGame();
+        if(checkIfUserWon()){ // Congratulation popup 
+            let congrPopup = document.getElementsByClassName('game-end-popup');
+            let movesNo = document.querySelector('.game-end-popup .moves-no');
+            let starsNo = document.querySelector('.game-end-popup .stars-no');
+            starsNo.innerHTML = movesCount <= 46?'3':movesCount <= 55?'2':'1';
+            movesNo.innerHTML = movesCount;
+            congrPopup[0].style.display = "block";
         }
     }
-    else if(classNames.contains('open')){
+    else if( e.target.tagName == "LI" && classNames.contains('open')){
         classNames.remove('open');
         classNames.remove('show');
         flippedCardsCount--;
@@ -93,6 +104,9 @@ function revealIcon(e){
 
 // Resetting moves rating and reinitiating the game
 function resetGame(){
+    let congrPopup = document.getElementsByClassName('game-end-popup');
+    congrPopup[0].style.display = "none";
+    
     movesCount = 0;
     document.querySelector('.moves').innerHTML = movesCount;
     let cardsList = document.querySelectorAll('.card');
@@ -109,15 +123,15 @@ function resetGame(){
 //count moves and rating score
 function scoreRating(){
     //(movesCount <= 24)? console.log('3 stars'):( (movesCount <= 30)? console.log('2 stars'): (movesCount > 30)? console.log('1 stars'): console.log('What!') ); 
-    if(movesCount <= 24){
+    if(movesCount <= 46){
         Array.prototype.forEach.call(stars, star => {
             star.classList = "fa fa-star";
         });
-    }else if(movesCount <= 30){
+    }else if(movesCount <= 55){
         stars[0].classList = "fa fa-star";
         stars[1].classList = "fa fa-star";
         stars[2].classList = "fa fa-star-o";
-    }else if(movesCount > 30){
+    }else if(movesCount > 55){
         stars[0].classList = "fa fa-star";
         stars[1].classList = "fa fa-star-o";
         stars[2].classList = "fa fa-star-o";

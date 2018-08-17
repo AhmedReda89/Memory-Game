@@ -1,3 +1,4 @@
+/* Generic styles and animations */
 @keyframes shake {
     10%, 90% {
       transform: translate3d(-1px, 0, 0);
@@ -51,9 +52,7 @@ h1 {
     font-weight: 300;
 }
 
-/*
- * Styles for the deck of cards
- */
+/* Styles for the deck of cards */
 
 .deck {
     width: 660px;
@@ -104,9 +103,7 @@ h1 {
     perspective: 1000px;
   }
 
-/*
- * Styles for the Score Panel
- */
+/* Styles for the Score Panel */
 
 .score-panel {
     text-align: left;
@@ -130,3 +127,18 @@ h1 {
     float: right;
     cursor: pointer;
 }
+.restart{background: transparent;border:none;}
+
+
+/* Congratulations Popup */
+.game-end-popup{
+    background: rgb(255, 255, 255);
+    text-align: center;
+    padding: 30vh 0px;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100vh;
+    font-size: 1.2em;
+}
+.game-end-popup button{background: #02ccba;border:none;padding: 5px 10px;color: #fff;cursor: pointer;}
