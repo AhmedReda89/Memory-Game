@@ -20,6 +20,14 @@ var flippedCardsCount = 0;
 var movesCount = 0;
 var movesRating = 0;
 
+// variables for timer
+var timerWrap = document.getElementsByClassName('timer')[0],
+   /* start = document.getElementById('start'),
+    stop = document.getElementById('stop'),
+    clear = document.getElementById('clear'),*/
+    seconds = 0, minutes = 0, hours = 0,
+    t;
+
 // icons array
 const classesArray = [
     "fa fa-diamond",
@@ -62,12 +70,38 @@ function init() {
             listItems[index].addEventListener("click", flipCard);
         });
         document.querySelector('.moves').innerHTML = movesCount;
+        timer();
 }
 init();
 
-function timer(){
-    // todo
+// Timer functionality
+function timer() {
+    t = setTimeout(add, 1000);
 }
+function add() {
+    seconds++;
+    if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes >= 60) {
+            minutes = 0;
+            hours++;
+        }
+    }
+    timerWrap.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+    timer();
+}
+function playTimer() {
+    timer();
+}
+function pauseTimer() {
+    clearTimeout(t);
+}
+function clearTimer() {
+    timerWrap.textContent = "00:00:00";
+    seconds = 0; minutes = 0; hours = 0;
+}
+
 
 // display the card's symbol
 function revealIcon(e){
@@ -92,6 +126,7 @@ function revealIcon(e){
             starsNo.innerHTML = movesCount <= 46?'3':movesCount <= 55?'2':'1';
             movesNo.innerHTML = movesCount;
             congrPopup[0].style.display = "block";
+            pauseTimer();
         }
     }
     else if( e.target.tagName == "LI" && classNames.contains('open')){
@@ -115,6 +150,7 @@ function resetGame(){
     });
     movesRating = 0;
     init();
+    clearTimer();
     Array.prototype.forEach.call(stars, star => {
         star.classList = "fa fa-star";
     });
