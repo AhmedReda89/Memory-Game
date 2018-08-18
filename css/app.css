@@ -148,3 +148,15 @@ h1 {
     font-size: 1.2em;
 }
 .game-end-popup button{background: #02ccba;border:none;padding: 5px 10px;color: #fff;cursor: pointer;}
+
+/* Media Queries */
+@media only screen and (max-width: 500px) {
+    .deck {
+        width: 300px;
+        min-height: 300px;
+    }
+    .deck .card {
+        height: 56px;
+        width: 56px;
+    }
+}
