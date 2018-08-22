@@ -119,7 +119,7 @@ function revealIcon(e){
             let congrPopup = document.getElementsByClassName('game-end-popup');
             let movesNo = document.querySelector('.game-end-popup .moves-no');
             let starsNo = document.querySelector('.game-end-popup .stars-no');
-            starsNo.innerHTML = movesCount <= 46?'3':movesCount <= 55?'2':'1';
+            starsNo.innerHTML = movesCount <= 24?'3':movesCount <= 30?'2':'1';
             movesNo.innerHTML = movesCount;
             congrPopup[0].style.display = "block";
             pauseTimer();
@@ -154,15 +154,15 @@ function resetGame(){
 
 //count moves and rating score
 function scoreRating(){
-    if(movesCount <= 46){
+    if(movesCount <= 24){
         Array.prototype.forEach.call(stars, star => {
             star.classList = "fa fa-star";
         });
-    }else if(movesCount <= 55){
+    }else if(movesCount <= 30){
         stars[0].classList = "fa fa-star";
         stars[1].classList = "fa fa-star";
         stars[2].classList = "fa fa-star-o";
-    }else if(movesCount > 55){
+    }else if(movesCount > 30){
         stars[0].classList = "fa fa-star";
         stars[1].classList = "fa fa-star-o";
         stars[2].classList = "fa fa-star-o";
