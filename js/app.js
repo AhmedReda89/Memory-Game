@@ -70,6 +70,7 @@ function init() {
 init();
 
 // Timer functionality
+// To do: use .prototype and put them all in one func to make it more Object oriented
 function timer() {
     t = setTimeout(add, 1000);
 }
@@ -83,7 +84,8 @@ function add() {
             hours++;
         }
     }
-    timerWrap.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+    timerWrap.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + 
+    (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
     timer();
 }
 function playTimer() {
@@ -104,7 +106,8 @@ function revealIcon(e){
     var classNames = e.target.classList;
     // Here we check if there's no cards flipped or only 1 is flipped
 
-    if( e.target.tagName == "LI" && !classNames.contains('open') && !classNames.contains('match') && flippedCardsCount < 2){ 
+    if( e.target.tagName == "LI" && !classNames.contains('open') && 
+    !classNames.contains('match') && flippedCardsCount < 2){ 
         classNames.add('open');
         classNames.add('show');
         movesCount ++;
