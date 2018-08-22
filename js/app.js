@@ -147,6 +147,7 @@ function resetGame(){
     Array.prototype.forEach.call(cardsList, card => {
         theDeck.removeChild(card);
     });
+    flippedCardsCount = 0;
     movesRating = 0;
     init();
     clearTimer();
