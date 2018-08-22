@@ -22,9 +22,6 @@ var movesRating = 0;
 
 // variables for timer
 var timerWrap = document.getElementsByClassName('timer')[0],
-   /* start = document.getElementById('start'),
-    stop = document.getElementById('stop'),
-    clear = document.getElementById('clear'),*/
     seconds = 0, minutes = 0, hours = 0,
     t;
 
@@ -57,7 +54,6 @@ function init() {
     var fakeDoc = document.createDocumentFragment();
         var x = classesArray.concat(classesArray);
         var newClassesArray = shuffle(x);
-        //console.log(newClassesArray);
         for (var i=0; i < newClassesArray.length; i++) {
             var newCard = createCard();
             newCard.children[0].classList += newClassesArray[i];
@@ -65,7 +61,6 @@ function init() {
         }
         theDeck.appendChild(fakeDoc);
         var listItems = document.querySelectorAll('.deck .card');
-        //debugger;
         listItems.forEach(function(item, index){
             listItems[index].addEventListener("click", flipCard);
         });
@@ -98,6 +93,7 @@ function pauseTimer() {
     clearTimeout(t);
 }
 function clearTimer() {
+    clearTimeout(t);
     timerWrap.textContent = "00:00:00";
     seconds = 0; minutes = 0; hours = 0;
 }
@@ -106,12 +102,12 @@ function clearTimer() {
 // display the card's symbol
 function revealIcon(e){
     var classNames = e.target.classList;
-    console.log(e.target);
     // Here we check if there's no cards flipped or only 1 is flipped
 
     if( e.target.tagName == "LI" && !classNames.contains('open') && !classNames.contains('match') && flippedCardsCount < 2){ 
         classNames.add('open');
         classNames.add('show');
+        movesCount ++;
         if(flippedCard1 == undefined){
             flippedCard1 = e.target;
         }else{
@@ -158,7 +154,6 @@ function resetGame(){
 
 //count moves and rating score
 function scoreRating(){
-    //(movesCount <= 24)? console.log('3 stars'):( (movesCount <= 30)? console.log('2 stars'): (movesCount > 30)? console.log('1 stars'): console.log('What!') ); 
     if(movesCount <= 46){
         Array.prototype.forEach.call(stars, star => {
             star.classList = "fa fa-star";
@@ -216,10 +211,11 @@ function compareFlippedCards(el){
                 }
             }
         }else{
-            console.log(cards);
             for (let index = 0; index < cards.length; index++) {
-                cards[index].classList.remove('open');
-                cards[index].classList.remove('show');
+                setTimeout(function(){
+                    cards[index].classList.remove('open');
+                    cards[index].classList.remove('show');
+                }, 1000)
             };
             flippedCard1 = undefined;
             flippedCard2 = undefined;
@@ -232,7 +228,7 @@ function compareFlippedCards(el){
 function flipCard(evt) { 
     var element = evt.target;
     element.classList = revealIcon(evt);
-    movesCount ++;
+    console.log(evt.target);
     document.querySelector('.moves').innerHTML = movesCount;
     scoreRating();
 }
