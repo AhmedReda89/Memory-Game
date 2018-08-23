@@ -19,7 +19,7 @@ Nothing to install, just make sure that Javascript is allowed on your browser, i
 
 ## Authors
 
-* **Ahmed Reda** - [Click here to view my work](https://github.com/AhmedReda89)
+* **Ahmed Reda** - [Click here to view some work](https://github.com/AhmedReda89)
 
 * See also the list of [contributors](https://github.com/AhmedReda89/Memory-Game/graphs/contributors) who participated in this project.
 
