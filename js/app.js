@@ -106,7 +106,7 @@ function revealIcon(e){
     !classNames.contains('match') && flippedCardsCount < 2){ 
         classNames.add('open');
         classNames.add('show');
-        movesCount ++;
+        //movesCount ++;
         if(flippedCard1 == undefined){
             flippedCard1 = e.target;
         }else{
@@ -118,7 +118,7 @@ function revealIcon(e){
             let congrPopup = document.getElementsByClassName('game-end-popup');
             let movesNo = document.querySelector('.game-end-popup .moves-no');
             let starsNo = document.querySelector('.game-end-popup .stars-no');
-            starsNo.innerHTML = movesCount <= 24?'3':movesCount <= 30?'2':'1';
+            starsNo.innerHTML = movesCount <= 22?'3':movesCount <= 26?'2':'1';
             movesNo.innerHTML = movesCount;
             congrPopup[0].style.display = "block";
             pauseTimer();
@@ -161,15 +161,15 @@ function resetGame(){
 
 //count moves and rating score
 function scoreRating(){
-    if(movesCount <= 24){
+    if(movesCount <= 22){
         Array.prototype.forEach.call(stars, star => {
             star.classList = "fa fa-star";
         });
-    }else if(movesCount <= 30){
+    }else if(movesCount <= 26){
         stars[0].classList = "fa fa-star";
         stars[1].classList = "fa fa-star";
         stars[2].classList = "fa fa-star-o";
-    }else if(movesCount > 30){
+    }else if(movesCount > 26){
         stars[0].classList = "fa fa-star";
         stars[1].classList = "fa fa-star-o";
         stars[2].classList = "fa fa-star-o";
@@ -228,6 +228,7 @@ function compareFlippedCards(el){
             flippedCard2 = undefined;
             flippedCardsCount = 0;
         }
+        movesCount ++;
     }
 }
 
