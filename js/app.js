@@ -12,7 +12,7 @@ Array.prototype.remove = function() {
 };
 
 
-// variable declaration
+// General variable declaration
 let theDeck = document.getElementsByClassName("deck")[0],
 stars = document.querySelectorAll('.rating-star'),
 flippedCard1, flippedCard2, flippedCardsCount = 0, movesCount = 0, movesRating = 0;
@@ -66,37 +66,14 @@ function init() {
 }
 init();
 
-// Timer functionality
-// To do: use .prototype and put them all in one func to make it more Object oriented
-function timer() {
-    t = setTimeout(add, 1000);
+// clicking a card
+function flipCard(evt) { 
+    let element = evt.target;
+    element.classList = revealIcon(evt);
+    console.log(evt.target);
+    document.querySelector('.moves').innerHTML = movesCount;
+    scoreRating();
 }
-function add() {
-    seconds++;
-    if (seconds >= 60) {
-        seconds = 0;
-        minutes++;
-        if (minutes >= 60) {
-            minutes = 0;
-            hours++;
-        }
-    }
-    timerWrap.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + 
-    (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
-    timer();
-}
-function playTimer() {
-    timer();
-}
-function pauseTimer() {
-    clearTimeout(t);
-}
-function clearTimer() {
-    clearTimeout(t);
-    timerWrap.textContent = "00:00:00";
-    seconds = 0; minutes = 0; hours = 0;
-}
-
 
 // display the card's symbol
 function revealIcon(e){
@@ -130,6 +107,63 @@ function revealIcon(e){
         flippedCardsCount--;
     }
     return classNames;
+}
+
+// checks if there're still unmatched cards
+function checkIfUserWon (){
+    let cards = document.getElementsByClassName("card");
+    let allMatched = false;
+    for (let index = 0; index < cards.length; index++) {
+        if(cards[index].classList.contains("match")){
+            allMatched = true;
+        }else{
+            allMatched = false;
+            return false;
+        }
+    }
+    return true;
+}
+
+// Check if cards match
+function compareFlippedCards(el){
+    //if the cards match highlight them and remove open and show classes for easier manipulation
+    if(flippedCardsCount == 2){
+        let cards = document.getElementsByClassName("card");
+        
+        let flippedCard1IconClasses = flippedCard1.children[0].classList;
+        let flippedCard2IconClasses = flippedCard2.children[0].classList;
+        if(JSON.stringify(flippedCard1IconClasses) == JSON.stringify(flippedCard2IconClasses)){
+            for (let index = 0; index < cards.length; index++) {
+                let cardOnHandClasses = cards[index].children[0].classList;
+                if(JSON.stringify(flippedCard1IconClasses) == JSON.stringify(cardOnHandClasses)){
+                    cards[index].classList.add('match');
+                    cards[index].classList.remove('open');
+                    cards[index].classList.remove('show');
+                    flippedCard1 = undefined;
+                    flippedCard2 = undefined;
+                    flippedCardsCount --;
+                }else if(JSON.stringify(flippedCard2IconClasses) == JSON.stringify(cardOnHandClasses)){
+                    cards[index].classList.add('match');
+                    cards[index].classList.remove('open');
+                    cards[index].classList.remove('show');
+                    flippedCard1 = undefined;
+                    flippedCard2 = undefined;
+                    flippedCardsCount --;
+                }
+            }
+        }else{
+            for (let index = 0; index < cards.length; index++) {
+                setTimeout(function(){
+                    cards[index].classList.remove('open');
+                    cards[index].classList.remove('show');
+                }, 1000)
+            };
+            flippedCard1 = undefined;
+            flippedCard2 = undefined;
+            flippedCardsCount = 0;
+        }
+        movesCount ++;
+    }
 }
 
 // Resetting moves rating and reinitiating the game
@@ -176,71 +210,6 @@ function scoreRating(){
     }
 }
 
-// checks if there're still unmatched cards
-function checkIfUserWon (){
-    let cards = document.getElementsByClassName("card");
-    let allMatched = false;
-    for (let index = 0; index < cards.length; index++) {
-        if(cards[index].classList.contains("match")){
-            allMatched = true;
-        }else{
-            allMatched = false;
-            return false;
-        }
-    }
-    return true;
-}
-
-function compareFlippedCards(el){
-    //if the cards match highlight them and remove open and show classes for easier manipulation
-    if(flippedCardsCount == 2){
-        let cards = document.getElementsByClassName("card");
-        
-        let flippedCard1IconClasses = flippedCard1.children[0].classList;
-        let flippedCard2IconClasses = flippedCard2.children[0].classList;
-        if(JSON.stringify(flippedCard1IconClasses) == JSON.stringify(flippedCard2IconClasses)){
-            for (let index = 0; index < cards.length; index++) {
-                let cardOnHandClasses = cards[index].children[0].classList;
-                if(JSON.stringify(flippedCard1IconClasses) == JSON.stringify(cardOnHandClasses)){
-                    cards[index].classList.add('match');
-                    cards[index].classList.remove('open');
-                    cards[index].classList.remove('show');
-                    flippedCard1 = undefined;
-                    flippedCard2 = undefined;
-                    flippedCardsCount --;
-                }else if(JSON.stringify(flippedCard2IconClasses) == JSON.stringify(cardOnHandClasses)){
-                    cards[index].classList.add('match');
-                    cards[index].classList.remove('open');
-                    cards[index].classList.remove('show');
-                    flippedCard1 = undefined;
-                    flippedCard2 = undefined;
-                    flippedCardsCount --;
-                }
-            }
-        }else{
-            for (let index = 0; index < cards.length; index++) {
-                setTimeout(function(){
-                    cards[index].classList.remove('open');
-                    cards[index].classList.remove('show');
-                }, 1000)
-            };
-            flippedCard1 = undefined;
-            flippedCard2 = undefined;
-            flippedCardsCount = 0;
-        }
-        movesCount ++;
-    }
-}
-
-// clicking a card
-function flipCard(evt) { 
-    let element = evt.target;
-    element.classList = revealIcon(evt);
-    console.log(evt.target);
-    document.querySelector('.moves').innerHTML = movesCount;
-    scoreRating();
-}
-
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
@@ -254,4 +223,35 @@ function shuffle(array) {
     }
     
     return array;
+}
+
+// Timer functionality
+// To do: use .prototype and put them all in one func to make it more Object oriented
+function timer() {
+    t = setTimeout(add, 1000);
+}
+function add() {
+    seconds++;
+    if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes >= 60) {
+            minutes = 0;
+            hours++;
+        }
+    }
+    timerWrap.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + 
+    (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+    timer();
+}
+function playTimer() {
+    timer();
+}
+function pauseTimer() {
+    clearTimeout(t);
+}
+function clearTimer() {
+    clearTimeout(t);
+    timerWrap.textContent = "00:00:00";
+    seconds = 0; minutes = 0; hours = 0;
 }
