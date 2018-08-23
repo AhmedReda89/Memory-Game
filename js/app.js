@@ -1,7 +1,7 @@
 
 // Helper functions
 Array.prototype.remove = function() {
-    var what, a = arguments, L = a.length, ax;
+    let what, a = arguments, L = a.length, ax;
     while (L && this.length) {
         what = a[--L];
         while ((ax = this.indexOf(what)) !== -1) {
@@ -13,15 +13,12 @@ Array.prototype.remove = function() {
 
 
 // variable declaration
-var theDeck = document.getElementsByClassName("deck")[0];
-var stars = document.querySelectorAll('.rating-star');
-var flippedCard1, flippedCard2;
-var flippedCardsCount = 0;
-var movesCount = 0;
-var movesRating = 0;
+let theDeck = document.getElementsByClassName("deck")[0],
+stars = document.querySelectorAll('.rating-star'),
+flippedCard1, flippedCard2, flippedCardsCount = 0, movesCount = 0, movesRating = 0;
 
 // variables for timer
-var timerWrap = document.getElementsByClassName('timer')[0],
+let timerWrap = document.getElementsByClassName('timer')[0],
     seconds = 0, minutes = 0, hours = 0,
     t;
 
@@ -40,9 +37,9 @@ const classesArray = [
 
 //Draw a card with an i tag to hold the icon later
 function createCard() {
-    var li = document.createElement('li');
+    let li = document.createElement('li');
     li.classList.add('card');
-    var image = document.createElement("i");
+    let image = document.createElement("i");
     theDeck.appendChild(li);
     li.appendChild(image);
     //image.classList.add("fa");
@@ -51,16 +48,16 @@ function createCard() {
 
 //Shuffling and adding icons inside the cards object
 function init() {
-    var fakeDoc = document.createDocumentFragment();
-        var x = classesArray.concat(classesArray);
-        var newClassesArray = shuffle(x);
-        for (var i=0; i < newClassesArray.length; i++) {
-            var newCard = createCard();
+    let fakeDoc = document.createDocumentFragment();
+        let x = classesArray.concat(classesArray);
+        let newClassesArray = shuffle(x);
+        for (let i=0; i < newClassesArray.length; i++) {
+            let newCard = createCard();
             newCard.children[0].classList += newClassesArray[i];
             fakeDoc.appendChild(newCard);
         }
         theDeck.appendChild(fakeDoc);
-        var listItems = document.querySelectorAll('.deck .card');
+        let listItems = document.querySelectorAll('.deck .card');
         listItems.forEach(function(item, index){
             listItems[index].addEventListener("click", flipCard);
         });
@@ -103,9 +100,8 @@ function clearTimer() {
 
 // display the card's symbol
 function revealIcon(e){
-    var classNames = e.target.classList;
     // Here we check if there's no cards flipped or only 1 is flipped
-
+    let classNames = e.target.classList;
     if( e.target.tagName == "LI" && !classNames.contains('open') && 
     !classNames.contains('match') && flippedCardsCount < 2){ 
         classNames.add('open');
@@ -140,20 +136,27 @@ function revealIcon(e){
 function resetGame(){
     let congrPopup = document.getElementsByClassName('game-end-popup');
     congrPopup[0].style.display = "none";
-    
+
+    flippedCardsCount = 0;
+    flippedCard1 = undefined;
+    flippedCard2 = undefined;
+    movesRating = 0;
     movesCount = 0;
+
     document.querySelector('.moves').innerHTML = movesCount;
     let cardsList = document.querySelectorAll('.card');
     Array.prototype.forEach.call(cardsList, card => {
         theDeck.removeChild(card);
     });
-    flippedCardsCount = 0;
-    movesRating = 0;
+    
     init();
     clearTimer();
     Array.prototype.forEach.call(stars, star => {
         star.classList = "fa fa-star";
     });
+    
+    theDeck = document.getElementsByClassName("deck")[0];
+    stars = document.querySelectorAll('.rating-star');
 }
 
 //count moves and rating score
@@ -191,13 +194,13 @@ function checkIfUserWon (){
 function compareFlippedCards(el){
     //if the cards match highlight them and remove open and show classes for easier manipulation
     if(flippedCardsCount == 2){
-        var cards = document.getElementsByClassName("card");
+        let cards = document.getElementsByClassName("card");
         
-        var flippedCard1IconClasses = flippedCard1.children[0].classList;
-        var flippedCard2IconClasses = flippedCard2.children[0].classList;
+        let flippedCard1IconClasses = flippedCard1.children[0].classList;
+        let flippedCard2IconClasses = flippedCard2.children[0].classList;
         if(JSON.stringify(flippedCard1IconClasses) == JSON.stringify(flippedCard2IconClasses)){
-            for (var index = 0; index < cards.length; index++) {
-                var cardOnHandClasses = cards[index].children[0].classList;
+            for (let index = 0; index < cards.length; index++) {
+                let cardOnHandClasses = cards[index].children[0].classList;
                 if(JSON.stringify(flippedCard1IconClasses) == JSON.stringify(cardOnHandClasses)){
                     cards[index].classList.add('match');
                     cards[index].classList.remove('open');
@@ -230,7 +233,7 @@ function compareFlippedCards(el){
 
 // clicking a card
 function flipCard(evt) { 
-    var element = evt.target;
+    let element = evt.target;
     element.classList = revealIcon(evt);
     console.log(evt.target);
     document.querySelector('.moves').innerHTML = movesCount;
@@ -239,7 +242,7 @@ function flipCard(evt) {
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
