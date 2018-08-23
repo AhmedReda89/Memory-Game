@@ -6,6 +6,9 @@ Challenge your brain with this awesome game!, go on try it out!!
 
 Start by downloading the game ZIP file to your computer, then Unzip it to a folder in your desired destination, after that open the game folder and double click on the index file, it will open up the game in your default browser.
 
+Or you can play it here in the link below:
+[https://ahmedreda89.github.io/Memory-Game/](https://ahmedreda89.github.io/Memory-Game/)
+
 ### Prerequisites
 
 Nothing to install, just make sure that Javascript is allowed on your browser, if the game didn't start or looked a little corrupted.
