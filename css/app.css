@@ -56,8 +56,8 @@ h1 {
 /* Styles for the deck of cards */
 
 .deck {
-    width: 39.063vw;
-    min-height: 38.15vw;
+    width: 41vw;
+    min-height: 39vw;
     background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
     padding: 16px 32px;
     border-radius: 10px;
@@ -150,6 +150,12 @@ h1 {
 .game-end-popup button{background: #02ccba;border:none;padding: 5px 10px;color: #fff;cursor: pointer;}
 
 /* Media Queries */
+@media only screen and (max-width: 768px) {
+    .deck {
+        width: 49vw;
+        min-height: 49vw;
+    }
+}
 @media only screen and (max-width: 500px) {
     .deck {
         width: 80vw;
